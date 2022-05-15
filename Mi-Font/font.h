@@ -4,10 +4,10 @@
 namespace Mi { namespace IO {
 
     typedef struct {
-        unsigned int texid;
+        uint32_t texid;
         glm::ivec2 size;
         glm::ivec2 bearing;
-        unsigned int advance;
+        uint32_t advance;
     } Character;
 
     class Font {
@@ -49,7 +49,7 @@ namespace Mi { namespace IO {
                    tex,
                    glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
                    glm::ivec2(face->glyph->bitmap_left,  face->glyph->bitmap_top),
-                   face->glyph->advance.x
+                   static_cast<uint32_t>(face->glyph->advance.x)
                };
                f->characters.insert(std::pair<char, Character>(c, character));
             }
