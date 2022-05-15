@@ -56,7 +56,7 @@ namespace Mi { namespace IO {
             }
 
             FT_Done_Face(face);
-            FT_Done_FreeType(f.ft);
+            FT_Done_FreeType(f->ft);
 
             return f;
         }
