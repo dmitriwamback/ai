@@ -29,6 +29,7 @@ namespace Mi { namespace IO {
                 return nullptr;
             }
             FT_Set_Pixel_Sizes(face, 0, 48);
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
             for (unsigned char c = 0; c < 128; c++) {
                 if (FT_Load_Char(face, c, FT_LOAD_RENDER)) {
@@ -53,6 +54,9 @@ namespace Mi { namespace IO {
                };
                f->characters.insert(std::pair<char, Character>(c, character));
             }
+
+            FT_Done_Face(face);
+            FT_Done_FreeType(f.ft);
 
             return f;
         }
