@@ -4,10 +4,10 @@
 namespace Mi { namespace IO {
 
     typedef struct {
-        uint32_t texid;
+        unsigned int texid;
         glm::ivec2 size;
         glm::ivec2 bearing;
-        uint32_t advance;
+        unsigned int advance;
     } Character;
 
     class Font {
