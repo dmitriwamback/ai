@@ -9,6 +9,7 @@
 #include <glm/vec4.hpp>
 #include <fstream>
 #include <sstream>
+#include <string>
 
 #define MI_ENGINE_OPENGL
 
@@ -49,12 +50,26 @@ namespace __MI_DEVELOPMENT_ENVIRONMENT {
             glCompileShader(vertexShader);
             glCompileShader(fragmentShader);
 
+            compileShader(vertexShader);
+            compileShader(fragmentShader);
+
             shader.program = glCreateProgram();
             glAttachShader(shader.program, vertexShader);
             glAttachShader(shader.program, fragmentShader);
             glLinkProgram(shader.program);
 
             return shader;
+        }
+
+        static void compileShader(int shader) {
+            int success;
+            char infoLog[1024];
+
+            glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+            if (!success) {
+                glGetShaderInfoLog(shader, 1024, NULL, infoLog);
+                std::cout << "ERROR::SHADER_COMPILE_ERROR of type: " << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+            }
         }
 
         void use() {
@@ -100,8 +115,10 @@ namespace __MI_DEVELOPMENT_ENVIRONMENT {
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
 
-        font = Mi::IO::Font::Create("fonts/Cinzel-Regular.ttf");
-        InitQuad(font->characters['a']);
+        font = Mi::IO::Font::Create("fonts/RobotoFlex-Regular.ttf");
+        InitQuad(font);
+
+        float a = 0;
 
         while (!glfwWindowShouldClose(main_window)) {
 
@@ -120,7 +137,9 @@ namespace __MI_DEVELOPMENT_ENVIRONMENT {
             else glViewport(-abs(width-height)/2, 0, height, height);
 #endif
 
-            RenderQuad(s);
+            RenderQuad(s, "Hello! " + std::to_string(a), glm::vec2(0.f));
+
+            a += 0.1f;
 
             glfwPollEvents();
             glfwSwapBuffers(main_window);
