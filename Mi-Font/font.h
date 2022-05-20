@@ -29,15 +29,19 @@ namespace Mi { namespace IO {
                 return nullptr;
             }
             FT_Set_Pixel_Sizes(face, 0, 48);
+#if defined(MI_ENGINE_OPENGL)
             glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+#endif
 
             for (unsigned char c = 0; c < 128; c++) {
+                
                 if (FT_Load_Char(face, c, FT_LOAD_RENDER)) {
                     std::cout << std::string(MI_FREE_TYPE_ERROR_CODE).append("Failed to read glyph\n");
                     continue;
                 }
 
                 uint32_t tex;
+#if defined(MI_ENGINE_OPENGL)
                 glGenTextures(1, &tex);
                 glBindTexture(GL_TEXTURE_2D, tex);
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, face->glyph->bitmap.width, face->glyph->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, face->glyph->bitmap.buffer);
@@ -45,6 +49,7 @@ namespace Mi { namespace IO {
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+#endif
 
                Character character = {
                    tex,
