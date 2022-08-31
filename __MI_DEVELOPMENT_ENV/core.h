@@ -10,10 +10,28 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <vector>
 
 #define MI_ENGINE_OPENGL
 
+#if defined(_WIN32)
+    #if defined(_WIN64)
+        #define MI_WINDOWS_IMPLEMENTATION
+    #else
+        #error "MI::ERROR::PLATFORM: Cannot run x86"
+    #endif
+#elif defined(__APPLE__) || defined(__MACH__)
+    #define MI_APPLE_IMPLEMENTATION
+
+#elif defined(__linux__)
+    #define MI_LINUX_IMPLEMENTATION
+
+#else
+    #error "MI::ERROR::PLATFORM: Unknown platform. Cannot support unknown platform."
+#endif
+
 #include "../Mi-Font/registry.h"
+#include "../Mi-Audio/registry.h"
 
 namespace __MI_DEVELOPMENT_ENVIRONMENT {
 
@@ -34,8 +52,8 @@ namespace __MI_DEVELOPMENT_ENVIRONMENT {
             std::ifstream _vs, _fs;
             std::stringstream vss, fss;
 
-            _vs.open(std::string("debug/").append(vertexShaderPath));
-            _fs.open(std::string("debug/").append(fragmentShaderPath));
+            _vs.open(std::string("__MI_DEBUG_debug/").append(vertexShaderPath));
+            _fs.open(std::string("__MI_DEBUG_debug/").append(fragmentShaderPath));
             vss << _vs.rdbuf();
             fss << _fs.rdbuf();
 
@@ -115,10 +133,16 @@ namespace __MI_DEVELOPMENT_ENVIRONMENT {
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
 
-        font = Mi::IO::Font::Create("fonts/RobotoFlex-Regular.ttf");
+        font = Mi::IO::Font::Create("__MI_DEBUG_fonts/RobotoFlex-Regular.ttf");
         InitQuad(font);
 
         float a = 0;
+
+        // AUDIO
+        Mi::Audio::AudioPlayer player;
+        Mi::Audio::AudioSource source = Mi::Audio::AudioSource::Create("__MI_DEBUG_audio/drm2.mp3", "AUDIO_1");
+        player.AddSource(source);
+        alSourcePlay(source.GetBuffer());
 
         while (!glfwWindowShouldClose(main_window)) {
 
@@ -137,7 +161,9 @@ namespace __MI_DEVELOPMENT_ENVIRONMENT {
             else glViewport(-abs(width-height)/2, 0, height, height);
 #endif
 
-            RenderQuad(s, "Hello! " + std::to_string(a), glm::vec2(0.f));
+            // TEXT RENDERING
+            RenderQuad(s, "YEAR: " + std::to_string((int)a), glm::vec2(0.f));
+
 
             a += 0.1f;
 
