@@ -28,7 +28,7 @@ namespace Mi {
 
     class RRenderer {
     public:
-        struct Material material;
+        Material material{};
         RenderBuffer buffer;
         std::vector<Mi::Texture> textures;
 
