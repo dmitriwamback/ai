@@ -20,8 +20,9 @@ namespace Mi {
             }
             source->Update();
         }
-        void SetAttributeSource(AttribSource *source) {
+        Attribute* SetAttributeSource(AttribSource *source) {
             this->source = source;
+            return this;
         }
     private:
         bool initialized = false;
