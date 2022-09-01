@@ -2,22 +2,39 @@
 #define MI_COMPONENT_IMPLEMENTATION
 
 namespace Mi {
-    class RAttribute {
+
+    class AttribSource {
     public:
-        RenderBuffer buffer;        
+        std::string name;
+        virtual void Update() {};
+        virtual void Initialized() {};
+    };
 
-        RAttribute() {}
-        RAttribute(RenderBuffer buffer) {}
+    class Attribute {
+    public:
+        void UseAttribute() {
+            if (source == nullptr) return;
+            if (!initialized) {
+                source->Initialized();
+                initialized = true;
+            }
+            source->Update();
+        }
+        void SetAttributeSource(AttribSource *source) {
+            this->source = source;
+        }
+    private:
+        bool initialized = false;
+        AttribSource* source;
+    };
 
-        // Updates the attribute with a shader
-        virtual void Update(Mi::Shader& shader) {}
+    class ObjectAttribute: public AttribSource {
+    public:
+        RenderBuffer buffer;
+        Mi::Scripting::Script script;
 
-        // Updates the attribute
-        virtual void Update() {}
-
-        void __ATTRUPDATE(Mi::Shader& shader) {
+        void __ATTRUPDATE() {
             Update();
-            Update(shader);
         }
 
         template<class T>
@@ -26,18 +43,15 @@ namespace Mi {
         }
     };
 
-    class RRenderer {
+    class ObjectRenderer: public AttribSource {
     public:
         Material material{};
         RenderBuffer buffer;
         std::vector<Mi::Texture> textures;
 
 
-        RRenderer() {}
-        RRenderer(RenderBuffer buffer) {}
-
-        // Updates the attribute with a shader
-        virtual void Update(Mi::Shader& shader) {}
+        ObjectRenderer() {}
+        ObjectRenderer(RenderBuffer buffer) {}
 
         // Updates the attribute
         virtual void Update() {}
@@ -45,9 +59,8 @@ namespace Mi {
         virtual float* GetVertices() { return nullptr; }
         virtual int GetVertexSize()  { return 0; }
 
-        void __ATTRUPDATE(Mi::Shader& shader) {
+        void __ATTRUPDATE() {
             Update();
-            Update(shader);
         }
     };
 }
