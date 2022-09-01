@@ -33,10 +33,6 @@ namespace Mi {
         RenderBuffer buffer;
         Mi::Scripting::Script script;
 
-        void __ATTRUPDATE() {
-            Update();
-        }
-
         template<class T>
         T CastTo() {
             return dynamic_cast<T>(this);
@@ -49,19 +45,10 @@ namespace Mi {
         RenderBuffer buffer;
         std::vector<Mi::Texture> textures;
 
-
         ObjectRenderer() {}
         ObjectRenderer(RenderBuffer buffer) {}
-
-        // Updates the attribute
-        virtual void Update() {}
-
         virtual float* GetVertices() { return nullptr; }
         virtual int GetVertexSize()  { return 0; }
-
-        void __ATTRUPDATE() {
-            Update();
-        }
     };
 }
 
