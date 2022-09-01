@@ -24,6 +24,9 @@ namespace Mi {
             this->source = source;
             return this;
         }
+        bool HasAttribSource() {
+            return source != nullptr;
+        }
     private:
         bool initialized = false;
         AttribSource* source;
