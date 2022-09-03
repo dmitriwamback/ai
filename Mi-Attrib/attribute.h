@@ -20,6 +20,10 @@ namespace Mi {
             }
             source->Update();
         }
+        AttribSource* GetSource() {
+            return source;
+        }
+
         Attribute* SetAttributeSource(AttribSource *source) {
             this->source = source;
             return this;
