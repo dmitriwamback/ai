@@ -5,8 +5,8 @@ public:
     uint32_t VertexBufferObject;
     uint32_t IndexBufferObject;
 
-    static RenderBuffer Create() {
-        RenderBuffer r = RenderBuffer();
+    static RenderBuffer* Create() {
+        RenderBuffer r = new RenderBuffer();
 
 #if defined(MI_ENGINE_OPENGL)
         glGenVertexArrays(1, &r.VertexArrayObject);
