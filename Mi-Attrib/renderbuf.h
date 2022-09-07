@@ -9,9 +9,9 @@ public:
         RenderBuffer* r = new RenderBuffer();
 
 #if defined(MI_ENGINE_OPENGL)
-        glGenVertexArrays(1, &r.VertexArrayObject);
-        glGenBuffers(1, &r.VertexBufferObject);
-        glGenBuffers(1, &r.IndexBufferObject);
+        glGenVertexArrays(1, &r->VertexArrayObject);
+        glGenBuffers(1, &r->VertexBufferObject);
+        glGenBuffers(1, &r->IndexBufferObject);
 #endif
 
         return r;
