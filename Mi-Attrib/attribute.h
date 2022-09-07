@@ -57,6 +57,7 @@ namespace Mi {
         ObjectRenderer(RenderBuffer buffer) {}
         virtual float* GetVertices() { return nullptr; }
         virtual int GetVertexSize()  { return 0; }
+        void SetRenderBuffer(RenderBuffer buffer) { this->buffer = buffer; }
     };
 }
 
