@@ -58,8 +58,8 @@ namespace Mi {
         virtual float* GetVertices() { return nullptr; }
         virtual int GetVertexSize()  { return 0; }
         void SetRenderBuffer(RenderBuffer *buffer) { this->buffer = buffer; }
-        void CreateModelMatrix(glm::vec3 position, glm::vec3 size, glm::vec3 rotation) {
-            
+        glm::mat4 CreateModelMatrix(glm::vec3 position, glm::vec3 size, glm::vec3 rotation) {
+
             glm::mat4 modelPosition = glm::translate(glm::mat4(1.f), position);
             glm::mat4 modelSize     = glm::scale(glm::mat4(1.f), size);
             glm::mat4 modelRotation = Mi::EulerAngles(rotation);
