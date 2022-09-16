@@ -64,7 +64,7 @@ namespace Mi {
             glm::mat4 modelSize     = glm::scale(glm::mat4(1.f), size);
             glm::mat4 modelRotation = Mi::EulerAngles(rotation);
 
-            return modelPosition * modelRotation * modelSize;
+            return modelPosition * modelSize;
         }
     };
 }
