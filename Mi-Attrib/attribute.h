@@ -66,6 +66,8 @@ namespace Mi {
 
             return modelPosition * modelSize;
         }
+
+        void Update(Mi::Material material);
     };
 }
 
