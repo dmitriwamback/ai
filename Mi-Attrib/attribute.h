@@ -64,7 +64,7 @@ namespace Mi {
             glm::mat4 modelSize     = glm::scale(glm::mat4(1.f), transform.size);
             glm::mat4 modelRotation = Mi::EulerAngles(transform.rotation);
 
-            return modelPosition * modelSize;
+            return modelPosition * modelRotation * modelSize;
         }
 
         virtual void RenderWithMaterial(Transform transform, Mi::Material material) {}
