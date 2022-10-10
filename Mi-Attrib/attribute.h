@@ -6,19 +6,19 @@ namespace Mi {
     class AttribSource {
     public:
         std::string name;
-        virtual void Update() {};
+        virtual void Update(Transform transform) {};
         virtual void Initialized() {};
     };
 
     class Attribute {
     public:
-        void UseAttribute() {
+        void UseAttribute(Transform transform) {
             if (source == nullptr) return;
             if (!initialized) {
                 source->Initialized();
                 initialized = true;
             }
-            source->Update();
+            source->Update(transform);
         }
         AttribSource* GetSource() {
             return source;
