@@ -67,7 +67,7 @@ namespace Mi {
             return modelPosition * modelRotation * modelSize;
         }
 
-        virtual void Render(Transform transform, Mi::Material material) {}
+        virtual void Render(Transform transform) {}
     };
 }
 
