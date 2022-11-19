@@ -49,7 +49,7 @@ namespace Mi {
 
     class ObjectRenderer: public AttribSource {
     public:
-        Material* material{};
+        Material material{};
         RenderBuffer* buffer;
         std::vector<Mi::Texture> textures;
 
